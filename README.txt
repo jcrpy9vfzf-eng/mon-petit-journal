@@ -1,0 +1,1 @@
+Mon Petit Journal — application web progressive.\n\nDéploiement : activer GitHub Pages sur la branche main, dossier /(root).\nAuthentification Google et synchronisation Firestore configurées dans index.html.\nLes règles Firestore doivent rester configurées directement dans Firebase Console, jamais dans ce dépôt public.\n
