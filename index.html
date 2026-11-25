@@ -63,7 +63,14 @@ function rangeEvents(daysBack,endDateKey=todayKey()){
 }
 function feedingSessions(list){
  const raw=list.filter(e=>e.type==='feed').sort((a,b)=>a.at-b.at),sessions=[];
- raw.forEach(e=>{const side=e.side||'',last=sessions[sessions.length-1],lastEvent=last&&last.events[last.events.length-1],opposite=(lastEvent?.side==='Gauche'&&side==='Droit')||(lastEvent?.side==='Droit'&&side==='Gauche');if(last&&opposite&&e.at-lastEvent.at<45*60000){last.events.push(e);last.end=e.at;last.side='Deux seins';}else sessions.push({at:e.at,end:e.at,side,events:[e]});});
+ raw.forEach(e=>{
+  const last=sessions[sessions.length-1];
+  if(last&&e.at-last.at<45*60000){
+   last.events.push(e);last.end=e.at;
+   const sides=new Set(last.events.map(x=>x.side).filter(Boolean));
+   last.side=(sides.has('Deux seins')||(sides.has('Gauche')&&sides.has('Droit')))?'Deux seins':(sides.values().next().value||'');
+  }else sessions.push({at:e.at,end:e.at,side:e.side||'',events:[e]});
+ });
  return sessions;
 }
 function feedMetrics(list){
