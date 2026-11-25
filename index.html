@@ -65,7 +65,7 @@ function feedingSessions(list){
  const raw=list.filter(e=>e.type==='feed').sort((a,b)=>a.at-b.at),sessions=[];
  raw.forEach(e=>{
   const last=sessions[sessions.length-1];
-  if(last&&e.at-last.at<45*60000){
+  if(last&&e.at-last.at<30*60000){
    last.events.push(e);last.end=e.at;
    const sides=new Set(last.events.map(x=>x.side).filter(Boolean));
    last.side=(sides.has('Deux seins')||(sides.has('Gauche')&&sides.has('Droit')))?'Deux seins':(sides.values().next().value||'');
